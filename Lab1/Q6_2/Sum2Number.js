@@ -1,21 +1,25 @@
-import React from 'react';
-import {Alert, Button, Text, TextInput, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Button, Text, TextInput, View } from 'react-native';
 
-const Sum2Number = props => {
+const Sum2Number = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [total, setTotal] = useState(0);
+
   const handleSum = () => {
-    const number1 = parseInt(props.number1);
-    const number2 = parseInt(props.number2);
-    const sum = number1 + number2;
-    Alert.alert(`The sum is: ${sum}`);
+    const inputArray = inputValue.split('');
+    const firstDigit = parseInt(inputArray[0], 10);
+    const lastDigit = parseInt(inputArray[inputArray.length - 1], 10);
+    const sum = firstDigit + lastDigit;
+    setTotal(sum);
+    // Alert.alert(`The sum of the first and last digits is ${sum}`);
   };
 
   return (
     <View>
-      <Text>Number 1:</Text>
-      <TextInput>{props.number1}</TextInput>
-      <Text>Number 2:</Text>
-      <TextInput>{props.number2}</TextInput>
+      <TextInput value={inputValue} onChangeText={
+        (text) => setInputValue(text)} />
       <Button onPress={handleSum} title="Calculate"></Button>
+      <Text>The sum is: {total}</Text>
     </View>
   );
 };

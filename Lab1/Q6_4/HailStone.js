@@ -1,42 +1,29 @@
-import React from 'react'
-import { Alert, Button, Text, TextInput, View } from 'react-native'
+import React, {useState} from 'react';
+import {Alert, Button, Text, TextInput, View} from 'react-native';
 
-export default function HailStone(props) {
+export default function HailStone() {
+  const [even, setEven] = useState('');
+  const [sequence, setSequence] = useState([]);
   const handleHailStone = () => {
-    let number = +props.number
-    let count = 0;
-    if(number > 0) {
-        while(number >= 1) {
-            if(number % 2 == 0) {
-                // even
-                while(number % 2 == 0) {
-                    number = number / 2;
-                    count++;
-                }
-                Alert.alert(`(EvenNumber)Hailstone is ${number},times of divide: ${count}`)
-                break;
-            } else {
-                if(number == 1) {
-                    Alert.alert(`(OddNumber)Hailstone is ${number},times of divide: ${count}`)
-                } else {
-                    number = number * 3 + 1;
-                    while(number % 2 == 0) {
-                        number = number / 2;
-                        count++;
-                    }
-                    Alert.alert(`(OddNumber)Hailstone is ${number},times of multiply:and divide is ${count}`)
-                }
-            }
-        }
-    } else {
-        Alert.alert("Please input a positive number:")
+    let number = parseInt(even, 10);
+    const sequenceArray = [number];
+    while (number !== 1) {
+      if (number % 2 === 0) {
+        number = number / 2;
+      } else {
+        number = number * 3 + 1;
+      }
+      sequenceArray.push(number);
     }
-  }
+    
+    setSequence(sequenceArray);
+    Alert.alert(`Your number is ${sequence.join(' ')}`);
+  };
   return (
-    <View> 
+    <View>
       <Text>Your number is:</Text>
-      <TextInput>{props.number}</TextInput>
-      <Button onPress={handleHailStone} title='HailStoneton'></Button>
+      <TextInput value={even} onChangeText={test => setEven(test)}></TextInput>
+      <Button onPress={handleHailStone} title="HailStone"></Button>
     </View>
-  )
+  );
 }
